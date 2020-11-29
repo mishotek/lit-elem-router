@@ -78,13 +78,46 @@ export class RouterUtils {
     }
 
     static pathToFragments(path) {
-        return path ? path
+        return path ? RouterUtils.removeQueryParams(path)
             .split('/')
-            .filter((fragment) => !!fragment) :
-            [];
+            .filter((fragment) => !!fragment) : [];
     }
 
     static getFragmentCount(path) {
         return RouterUtils.pathToFragments(path).length;
+    }
+
+    static removeQueryParams(path) {
+        return path.includes('?') ? path.substring(0, path.indexOf('?')) : path;
+    }
+
+    static getQueryParams(path) {
+        if (!path.includes('?')) {
+            return {};
+        }
+
+        return path
+            .substring(path.indexOf('?') + 1, path.length)
+            .split('&')
+            .filter((str) => !!str)
+            .map((str) => str.split('='))
+            .reduce((params, [key, val]) => ({...params, [key]: val}), {});
+    }
+
+    static getParamName(fragment) {
+        return fragment.replace(':', '');
+    }
+
+    static getParams(routePath, navigationPath) {
+        const routePathFragments = RouterUtils.pathToFragments(routePath);
+        const navigationPathFragments = RouterUtils.pathToFragments(navigationPath);
+
+        return routePathFragments
+            .map((fragment, index) => ({fragment, index}))
+            .filter(({fragment, index}) => RouterUtils.isFragmentParam(fragment))
+            .reduce((params, {fragment, index}) => ({
+                ...params,
+                [RouterUtils.getParamName(fragment)]: navigationPathFragments[index],
+            }), {});
     }
 }

@@ -49,7 +49,9 @@ export class LitRouter extends LitElement {
         });
 
         if (routeToActivate) {
-            routeToActivate.activate();
+            const params = RouterUtils.getParams(routeToActivate.path, path);
+            const queryParams = RouterUtils.getQueryParams(path);
+            routeToActivate.activate(params, queryParams);
         }
     }
 

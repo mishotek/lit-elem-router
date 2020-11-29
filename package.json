@@ -1,6 +1,6 @@
 {
   "name": "lit-elem-router",
-  "version": "1.0.6",
+  "version": "1.0.12",
   "description": "Simple, lightweight router written to be used with web components. Supports lazy loading.",
   "main": "public/index.js",
   "files": [
@@ -9,7 +9,8 @@
   "scripts": {
     "prebuild": "rimraf public/",
     "build": "rollup -c",
-    "test": "jest test --coverage"
+    "test": "jest test --coverage",
+    "upload": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,11 @@
     "web-components",
     "lazy",
     "lit",
-    "element"
+    "element",
+    "lit-element",
+    "components",
+    "routing",
+    "route"
   ],
   "author": "Mikheil Tektumanidze",
   "license": "MIT",

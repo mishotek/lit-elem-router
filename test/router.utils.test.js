@@ -77,6 +77,12 @@ test('Should match route with fallback', () => {
     expect(RouterUtils.isMatchingPath(routePath, navigationPath)).toBeTruthy();
 });
 
+test('Query params should be ignored when comparing routes', () => {
+    const routePath = '/rume/magaria';
+    const navigationPath = '/rume/magaria?aba=ra';
+    expect(RouterUtils.isMatchingPath(routePath, navigationPath)).toBeTruthy();
+});
+
 test('Should match a fallback path', () => {
     const routePath = '/**';
     const navigationPath = '/something';
@@ -117,4 +123,34 @@ test('Should match route without matching fragment', () => {
     const routePath = '/rume/magaria/**';
     const navigationPath = '/rume/dzaan/rame';
     expect(RouterUtils.isFallbackPath(routePath, navigationPath)).toBeFalsy();
+});
+
+test('Should return empty object for query param', () => {
+    const path = '/rame';
+    const expected = {};
+    expect(RouterUtils.getQueryParams(path)).toEqual(expected);
+});
+
+test('Should return query param', () => {
+    const path = '/rame?rame=rume';
+    const expected = {rame: 'rume'};
+    expect(RouterUtils.getQueryParams(path)).toEqual(expected);
+});
+
+test('Should return all the query params', () => {
+    const path = '/rame?rame=rume&da=kidev&erti';
+    const expected = {rame: 'rume', da: 'kidev', erti: undefined};
+    expect(RouterUtils.getQueryParams(path)).toEqual(expected);
+});
+
+test('Should return correct param name', () => {
+    expect(RouterUtils.getParamName(':myParam')).toBe('myParam');
+});
+
+test('Should return empty params', () => {
+    expect(RouterUtils.getParams('/something', '/something')).toEqual({});
+});
+
+test('Should return params', () => {
+    expect(RouterUtils.getParams('/:id/path/:url', '/12/path/www/something/else')).toEqual({id: '12', url: 'www'});
 });

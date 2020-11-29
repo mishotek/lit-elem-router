@@ -16,7 +16,7 @@ export class LitRoute extends LitElement {
 
     render() {
         // language=html
-        return this.active ? html`<slot></slot>` : '';
+        return this.active ? html`<slot id="contents"></slot>` : '';
     }
 
     static get properties() {
@@ -31,14 +31,29 @@ export class LitRoute extends LitElement {
         };
     }
 
-    activate() {
+    activate(params = {}, queryParams = {}) {
         this.active = true;
         this._notifyActivation();
+
+        setTimeout(() => {
+            this._setParams(this.path, params, queryParams);
+        }, 100);
     }
 
     deactivate() {
         this.active = false;
         this._notifyDeactivation();
+    }
+
+    _setParams(path, params, queryParams) {
+        this.shadowRoot.getElementById('contents')
+            .assignedNodes()
+            .filter(this._isHtmlNode)
+            .forEach((node) => {
+                node.routePath = typeof path === 'object' ? path : {};
+                node.routeParams = typeof params === 'object' ? params : {};
+                node.routeQueryParams = typeof queryParams === 'object' ? queryParams : {};
+            });
     }
 
     _notifyActivation() {
@@ -47,6 +62,10 @@ export class LitRoute extends LitElement {
 
     _notifyDeactivation() {
         this.dispatchEvent(new CustomEvent('deactivate'));
+    }
+
+    _isHtmlNode(node) {
+        return node.nodeType !== Node.TEXT_NODE;
     }
 }
 

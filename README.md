@@ -65,7 +65,7 @@ function _loadHome() {
 }
 ```
 
-If you want a default route, that will be activated if nothing else matches the path, you can use ````**``` as a fragment in your path
+If you want a default route, that will be activated if nothing else matches the path, you can use ```**``` as a fragment in your path
 ```html
 <lit-router>
     <lit-route path="/home">
