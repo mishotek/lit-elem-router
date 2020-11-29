@@ -7,7 +7,7 @@ export class RouterUtils {
         const routePathFragments = RouterUtils.pathToFragments(routePath);
         const navigationPathFragments = RouterUtils.pathToFragments(navigationPath);
 
-        if (routePathFragments.length > navigationPathFragments) {
+        if (routePathFragments.length > navigationPathFragments.length) {
             return false;
         }
 

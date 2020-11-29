@@ -17,9 +17,7 @@ class RouterNavigatorSingleton {
 
     onNavigation(callback) {
         this._listeners.push(callback);
-        if (this._path) {
-            callback(this._path);
-        }
+        callback(this._path);
     }
 
     _listenToNavigation() {

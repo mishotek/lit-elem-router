@@ -9,7 +9,7 @@
   "scripts": {
     "prebuild": "rimraf public/",
     "build": "rollup -c",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest test --coverage"
   },
   "repository": {
     "type": "git",
@@ -32,8 +32,11 @@
     "lit-element": "^2.4.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.12.7",
     "@rollup/plugin-node-resolve": "^10.0.0",
+    "babel-jest": "^26.6.3",
     "es-dev-server": "^1.57.8",
+    "jest": "^26.6.3",
     "rimraf": "^3.0.2",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-copy": "^3.3.0",

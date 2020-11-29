@@ -1,7 +1,7 @@
 import {LitElement, css, html} from 'lit-element';
 import {LitRoute} from './lit-route';
-import {RouterUtils} from './router.utils';
-import {RouterNavigator} from './router.navigator';
+import {RouterUtils} from '../router.utils';
+import {RouterNavigator} from '../router.navigator';
 export * from './lit-route';
 export * from './lit-router-link';
 
@@ -38,7 +38,6 @@ export class LitRouter extends LitElement {
     }
 
     _navigate(path) {
-        console.log(path);
         const routeNodes = this._getRouteNodes();
         const routeToActivate = this._findRouteToActivate(routeNodes, path);
 

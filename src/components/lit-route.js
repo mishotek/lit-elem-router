@@ -33,10 +33,20 @@ export class LitRoute extends LitElement {
 
     activate() {
         this.active = true;
+        this._notifyActivation();
     }
 
     deactivate() {
         this.active = false;
+        this._notifyDeactivation();
+    }
+
+    _notifyActivation() {
+        this.dispatchEvent(new CustomEvent('activate'));
+    }
+
+    _notifyDeactivation() {
+        this.dispatchEvent(new CustomEvent('deactivate'));
     }
 }
 
