@@ -35,9 +35,10 @@ export class LitRoute extends LitElement {
         this.active = true;
         this._notifyActivation();
 
+        // TODO use after next render
         setTimeout(() => {
             this._setParams(this.path, params, queryParams);
-        }, 100);
+        }, 50);
     }
 
     deactivate() {
@@ -50,7 +51,7 @@ export class LitRoute extends LitElement {
             .assignedNodes()
             .filter(this._isHtmlNode)
             .forEach((node) => {
-                node.routePath = typeof path === 'object' ? path : {};
+                node.routePath = typeof path === 'string' ? path : '';
                 node.routeParams = typeof params === 'object' ? params : {};
                 node.routeQueryParams = typeof queryParams === 'object' ? queryParams : {};
             });

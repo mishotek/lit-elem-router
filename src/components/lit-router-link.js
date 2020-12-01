@@ -11,12 +11,17 @@ export class LitRouterLink extends LitElement {
             :host {
                 display: inline-block;
             }
+            
+            .text {
+                color: inherit;
+                text-decoration: none;
+            }
         `;
     }
 
     render() {
         // language=html
-        return html`<a href="/#${this.href}"><slot></slot></a>`;
+        return html`<a class="text" href="/#${this.href}"><slot></slot></a>`;
     }
 
     static get properties() {
