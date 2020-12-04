@@ -16,7 +16,7 @@ export class LitRoute extends LitElement {
 
     render() {
         // language=html
-        return this.active ? html`<slot id="contents"></slot>` : '';
+        return html``;
     }
 
     static get properties() {
@@ -24,37 +24,58 @@ export class LitRoute extends LitElement {
             path: {
                 type: String,
             },
+            tagName: {
+                type: String,
+                reflect: true,
+                attribute: 'tag-name',
+            },
             active: {
                 type: Boolean,
                 reflect: true,
             },
+            _nodeCreated: {
+                type: Boolean,
+            }
         };
     }
 
     activate(params = {}, queryParams = {}) {
         this.active = true;
-        this._notifyActivation();
 
-        // TODO use after next render
-        setTimeout(() => {
-            this._setParams(this.path, params, queryParams);
-        }, 50);
+        if (!this._nodeCreated) {
+            this._createNode();
+            this._nodeCreated = true;
+        }
+
+        this._setParams(this.path, params, queryParams);
+        this._notifyActivation();
     }
 
     deactivate() {
         this.active = false;
+
+        if (this._nodeCreated) {
+            this._removeNode();
+            this._nodeCreated = false;
+        }
+
         this._notifyDeactivation();
     }
 
+    _createNode() {
+        const node = document.createElement(this.tagName);
+        this.shadowRoot.appendChild(node);
+    }
+
+    _removeNode() {
+        this.shadowRoot.innerHTML = '';
+    }
+
     _setParams(path, params, queryParams) {
-        this.shadowRoot.getElementById('contents')
-            .assignedNodes()
-            .filter(this._isHtmlNode)
-            .forEach((node) => {
-                node.routePath = typeof path === 'string' ? path : '';
-                node.routeParams = typeof params === 'object' ? params : {};
-                node.routeQueryParams = typeof queryParams === 'object' ? queryParams : {};
-            });
+        const node = this._node;
+        node.routePath = typeof path === 'string' ? path : '';
+        node.routeParams = typeof params === 'object' ? params : {};
+        node.routeQueryParams = typeof queryParams === 'object' ? queryParams : {};
     }
 
     _notifyActivation() {
@@ -65,8 +86,8 @@ export class LitRoute extends LitElement {
         this.dispatchEvent(new CustomEvent('deactivate'));
     }
 
-    _isHtmlNode(node) {
-        return node.nodeType !== Node.TEXT_NODE;
+    get _node() {
+        return this.shadowRoot.childNodes[0];
     }
 }
 

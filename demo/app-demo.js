@@ -48,18 +48,8 @@ export class AppDemo extends LitElement {
                 
             <div class="pages">
                 <lit-router>
-                    <lit-route path="/">
-                        <app-home-demo></app-home-demo>
-                    </lit-route>
-                    <lit-route path="/user/:id">
-                        <app-user-demo></app-user-demo>
-                    </lit-route>
-                    <lit-route path="/login">
-                        <h3>Login page</h3>
-                    </lit-route>
-                    <lit-route path="/register">
-                        <h3>Register page</h3>
-                    </lit-route>
+                    <lit-route path="/" tag-name="app-home-demo"></lit-route>
+                    <lit-route path="/user/:id" tag-name="app-user-demo"></lit-route>
                 </lit-router>
             </div>
         `;
@@ -72,12 +62,6 @@ export class AppDemo extends LitElement {
                 <ul class="header-list">
                     <li class="header-item">
                         <lit-router-link href="/">Home</lit-router-link>
-                    </li>
-                    <li class="header-item">
-                        <lit-router-link href="/login">Login</lit-router-link>
-                    </li>
-                    <li class="header-item">
-                        <lit-router-link href="/register">Register</lit-router-link>
                     </li>
                     <li class="header-item">
                         <lit-router-link href="/user/1">User #1</lit-router-link>

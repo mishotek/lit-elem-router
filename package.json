@@ -1,13 +1,13 @@
 {
   "name": "lit-elem-router",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Simple, lightweight router written to be used with web components. Supports lazy loading.",
   "main": "public/index.js",
   "files": [
     "public"
   ],
   "scripts": {
-    "dev": "es-dev-server --app-index index.html --node-resolve --watch --open",
+    "demo": "es-dev-server --app-index index.html --node-resolve --watch --open",
     "prebuild": "rimraf public/",
     "build": "rollup -c",
     "test": "jest test --coverage",
