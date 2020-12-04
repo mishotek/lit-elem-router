@@ -40,7 +40,6 @@ export class LitRouter extends LitElement {
     _navigate(path) {
         const routeNodes = this._getRouteNodes();
         const routeToActivate = this._findRouteToActivate(routeNodes, path);
-
         routeNodes.forEach((routeNode) => {
             const isRouteToActivate = routeNode === routeToActivate;
             if (!isRouteToActivate) {

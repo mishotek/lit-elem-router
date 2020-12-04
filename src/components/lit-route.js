@@ -14,11 +14,6 @@ export class LitRoute extends LitElement {
         `;
     }
 
-    render() {
-        // language=html
-        return html``;
-    }
-
     static get properties() {
         return {
             path: {
