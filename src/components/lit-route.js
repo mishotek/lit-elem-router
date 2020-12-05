@@ -1,4 +1,4 @@
-import {LitElement, css, html} from 'lit-element';
+import {LitElement, css} from 'lit-element';
 
 export class LitRoute extends LitElement {
     static get is() {
@@ -28,8 +28,8 @@ export class LitRoute extends LitElement {
                 type: Boolean,
                 reflect: true,
             },
-            _nodeCreated: {
-                type: Boolean,
+            _node: {
+                type: Object,
             }
         };
     }
@@ -37,9 +37,8 @@ export class LitRoute extends LitElement {
     activate(params = {}, queryParams = {}) {
         this.active = true;
 
-        if (!this._nodeCreated) {
-            this._createNode();
-            this._nodeCreated = true;
+        if (!this._node) {
+            this._node = this._createNode();
         }
 
         this._setParams(this.path, params, queryParams);
@@ -49,9 +48,9 @@ export class LitRoute extends LitElement {
     deactivate() {
         this.active = false;
 
-        if (this._nodeCreated) {
+        if (this._node) {
             this._removeNode();
-            this._nodeCreated = false;
+            this._node = null;
         }
 
         this._notifyDeactivation();
@@ -60,6 +59,7 @@ export class LitRoute extends LitElement {
     _createNode() {
         const node = document.createElement(this.tagName);
         this.shadowRoot.appendChild(node);
+        return node;
     }
 
     _removeNode() {
@@ -74,15 +74,17 @@ export class LitRoute extends LitElement {
     }
 
     _notifyActivation() {
-        this.dispatchEvent(new CustomEvent('activate'));
+        this.dispatchEvent(new CustomEvent('activate', {
+            detail: {
+                path: this.path,
+                tagName: this.tagName,
+                node: this._node,
+            }
+        }));
     }
 
     _notifyDeactivation() {
         this.dispatchEvent(new CustomEvent('deactivate'));
-    }
-
-    get _node() {
-        return this.shadowRoot.childNodes[0];
     }
 }
 

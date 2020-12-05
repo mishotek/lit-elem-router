@@ -5,9 +5,7 @@ import copy from 'rollup-plugin-copy';
 import cleanup from 'rollup-plugin-cleanup';
 
 const copyConfig = {
-    targets: [
-        { src: 'node_modules/@webcomponents', dest: 'public/node_modules' },
-    ],
+    targets: [],
 };
 
 const config = {

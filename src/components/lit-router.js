@@ -2,8 +2,6 @@ import {LitElement, css, html} from 'lit-element';
 import {LitRoute} from './lit-route';
 import {RouterUtils} from '../router.utils';
 import {RouterNavigator} from '../router.navigator';
-export * from './lit-route';
-export * from './lit-router-link';
 
 export class LitRouter extends LitElement {
     static get is() {
@@ -37,7 +35,7 @@ export class LitRouter extends LitElement {
             .onNavigation(this._navigate.bind(this));
     }
 
-    _navigate(path) {
+    _navigate(path, queryParams) {
         const routeNodes = this._getRouteNodes();
         const routeToActivate = this._findRouteToActivate(routeNodes, path);
         routeNodes.forEach((routeNode) => {
@@ -49,8 +47,8 @@ export class LitRouter extends LitElement {
 
         if (routeToActivate) {
             const params = RouterUtils.getParams(routeToActivate.path, path);
-            const queryParams = RouterUtils.getQueryParams(path);
-            routeToActivate.activate(params, queryParams);
+            const queryParamsObj = RouterUtils.parseQueryParams(queryParams);
+            routeToActivate.activate(params, queryParamsObj);
         }
     }
 

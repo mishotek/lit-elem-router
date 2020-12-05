@@ -1,8 +1,8 @@
 import {css, html, LitElement} from "lit-element";
 import '../src/components/lit-route';
 import '../src/components/lit-router';
-import '../src/components/lit-router-link';
 import {Users} from "./users";
+import {Router} from "../src/Router";
 
 export class AppDemo extends LitElement {
     static get is() {
@@ -45,7 +45,7 @@ export class AppDemo extends LitElement {
         // language=html
         return html`
             ${this._header}
-                
+            
             <div class="pages">
                 <lit-router>
                     <lit-route path="/" tag-name="app-home-demo"></lit-route>
@@ -61,13 +61,16 @@ export class AppDemo extends LitElement {
             <div class="header">
                 <ul class="header-list">
                     <li class="header-item">
-                        <lit-router-link href="/">Home</lit-router-link>
+                        <a href="/">Home</a>
                     </li>
                     <li class="header-item">
-                        <lit-router-link href="/user/1">User #1</lit-router-link>
+                        <a href="/user/1">User #1</a>
                     </li>
                     <li class="header-item">
-                        <lit-router-link href="/?odd=true">Users with odd ids</lit-router-link>
+                        <a href="/?odd=true&even=false">Users with odd ids</a>
+                    </li>
+                    <li class="header-item">
+                        <button @click="${() => Router.back()}">Back</button>
                     </li>
                 </ul>
             </div>
@@ -174,12 +177,13 @@ export class AppHomeDemo extends LitElement {
             <h3>Home page</h3>
             <div class="users">
                 ${this._users.map(user => html`
-                    <lit-router-link style="display: block" href="/user/${user.id}">
-                        <div class="user">
-                            <p>Id: ${user.id}</p>
-                            <p>Name: ${user.name}</p>
-                        </div>
-                    </lit-router-link>
+                    <div class="user">
+                        <p>Id: ${user.id}</p>
+                        <p>Name: ${user.name}</p>
+                        <button @click="${() => Router.navigate(`/user/${user.id}`)}">
+                            Details
+                        </button>
+                    </div>
                 `)}
             </div>
         `;

@@ -13,10 +13,10 @@ test('On navigation should add callback to listeners', () => {
     expect(navigator._listeners.length).toBe(1);
 });
 
-test('Callback should be called once on navigation', () => {
-    let counter = 0;
-    const navigator = RouterNavigator.getInstance();
-    navigator.onNavigation(() => { counter++; });
-    navigator._onHashChange();
-    setTimeout(() => expect(counter).toBe(1), 5);
-})
+// test('Callback should be called once on click', () => {
+//     let counter = 0;
+//     const navigator = RouterNavigator.getInstance();
+//     navigator.onNavigation(() => { counter++; });
+//     window.document.dispatchEvent(new CustomEvent())
+//     setTimeout(() => expect(counter).toBe(1), 5);
+// })

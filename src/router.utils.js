@@ -91,13 +91,13 @@ export class RouterUtils {
         return path.includes('?') ? path.substring(0, path.indexOf('?')) : path;
     }
 
-    static getQueryParams(path) {
-        if (!path.includes('?')) {
+    static parseQueryParams(queryParams) {
+        if (!queryParams) {
             return {};
         }
 
-        return path
-            .substring(path.indexOf('?') + 1, path.length)
+        return queryParams
+            .substring(queryParams.indexOf('?') + 1, queryParams.length)
             .split('&')
             .filter((str) => !!str)
             .map((str) => str.split('='))

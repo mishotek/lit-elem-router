@@ -126,21 +126,25 @@ test('Should match route without matching fragment', () => {
 });
 
 test('Should return empty object for query param', () => {
-    const path = '/rame';
+    const queryParams = '';
     const expected = {};
-    expect(RouterUtils.getQueryParams(path)).toEqual(expected);
+    expect(RouterUtils.parseQueryParams(queryParams)).toEqual(expected);
 });
 
 test('Should return query param', () => {
-    const path = '/rame?rame=rume';
+    const queryParams = '?rame=rume';
     const expected = {rame: 'rume'};
-    expect(RouterUtils.getQueryParams(path)).toEqual(expected);
+    expect(RouterUtils.parseQueryParams(queryParams)).toEqual(expected);
 });
 
 test('Should return all the query params', () => {
-    const path = '/rame?rame=rume&da=kidev&erti';
-    const expected = {rame: 'rume', da: 'kidev', erti: undefined};
-    expect(RouterUtils.getQueryParams(path)).toEqual(expected);
+    const queryParams = '?rame=rume&kidev=rame&da';
+    const expected = {
+        rame: 'rume',
+        kidev: 'rame',
+        da: undefined,
+    };
+    expect(RouterUtils.parseQueryParams(queryParams)).toEqual(expected);
 });
 
 test('Should return correct param name', () => {

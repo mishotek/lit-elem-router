@@ -1,5 +1,3 @@
-# THIS IS NOT FINISHED PACKAGE PLEASE CONTACT ME BEFORE USAGE mtekt16@freeuni.edu.ge
-
 # lit-elem-router
 Simple, lightweight router written to be used with web components. Supports lazy loading.
 
@@ -20,7 +18,6 @@ Create a layout for your page
     <lit-route path="/login" tag-name="app-login"></lit-route>
 </lit-router>
 ```
-> Router uses hash navigation, so path to 'register' page will be /#/register and not /register. If you don't want to add /#/ to every href, you can use ```<lit-router-link>``` instead of ```<a>```, it will just add /#/ to the href for you.
 
 You can nest routers
 ```html
@@ -65,3 +62,20 @@ If you want a default route, that will be activated if nothing else matches the 
     <lit-route path="/**" tag-name="app-404-page"></lit-route>
 </lit-router>
 ```
+
+No navigate using js, you can use static functions provided by Router
+```javascript
+// To go to /register
+Router.navigate('/register');
+// To return to the prev location
+Router.back();
+```
+
+Router supports parameters in url like node or angular:
+```html
+<lit-router>
+    <lit-route path="/user/:id" tag-name="app-home-page"></lit-route>
+</lit-router>
+```
+
+Feel free to open an issue if you need help, or you found a bug
