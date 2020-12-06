@@ -8,20 +8,21 @@ const copyConfig = {
     targets: [],
 };
 
-const config = {
-    input: 'src/index.js',
-    output: {
-        dir: 'public/',
-        format: 'es',
+const config = [
+    {
+        input: ['src/index.js', 'src/router.js'],
+        output: {
+            dir: 'public/',
+            format: 'es',
+        },
+        plugins: [
+            minifyHTML(),
+            copy(copyConfig),
+            resolve(),
+            cleanup(),
+            terser(),
+        ],
     },
-    plugins: [
-        minifyHTML(),
-        copy(copyConfig),
-        resolve(),
-        cleanup(),
-        terser(),
-    ],
-    preserveEntrySignatures: false,
-};
+];
 
 export default config;

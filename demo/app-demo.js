@@ -2,7 +2,7 @@ import {css, html, LitElement} from "lit-element";
 import '../src/components/lit-route';
 import '../src/components/lit-router';
 import {Users} from "./users";
-import {Router} from "../src/Router";
+import {Router} from "../src/router";
 
 export class AppDemo extends LitElement {
     static get is() {
