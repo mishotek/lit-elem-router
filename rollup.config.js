@@ -1,17 +1,14 @@
 import resolve from '@rollup/plugin-node-resolve';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
-import copy from 'rollup-plugin-copy';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-
-const copyConfig = {
-    targets: [
-        { src: 'src/components/*', dest: 'public' },
-    ],
-};
+import {terser} from "rollup-plugin-terser";
 
 const config = [
     {
-        input: ['src/router.js'],
+        input: [
+            'src/components/lit-route.js',
+            'src/components/lit-router.js',
+        ],
         output: {
             dir: 'public/',
             format: 'es',
@@ -19,10 +16,21 @@ const config = [
         plugins: [
             peerDepsExternal(),
             minifyHTML(),
-            copy(copyConfig),
             resolve(),
+            terser(),
         ],
     },
+    {
+        input: 'src/router.js',
+        output: {
+            dir: 'public/',
+            format: 'es',
+        },
+        plugins: [
+            peerDepsExternal(),
+            resolve(),
+        ],
+    }
 ];
 
 export default config;
