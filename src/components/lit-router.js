@@ -30,9 +30,14 @@ export class LitRouter extends LitElement {
 
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
-        RouterNavigator
+        this._subscription = RouterNavigator
             .getInstance()
             .onNavigation(this._navigate.bind(this));
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this._subscription.unsubscribe();
     }
 
     _navigate(path, queryParams) {

@@ -1,6 +1,7 @@
 import {clickTrigger} from "./triggers/click.trigger";
 import {litRouterTrigger} from "./triggers/lit-router.trigger";
 import {popstateTrigger} from "./triggers/popstate.trigger";
+import {Observable} from "./utils/observable";
 
 export class RouterNavigator {
     static getInstance() {
@@ -13,16 +14,15 @@ export class RouterNavigator {
 
 class RouterNavigatorSingleton {
     constructor() {
-        this._listeners = [];
+        this.navigation$ = new Observable();
         this._path = '';
         this._queryParams = '';
         this._listenToNavigation();
     }
 
-    // TODO might be source of memory leaks
     onNavigation(callback) {
-        this._listeners.push(callback);
         callback(this._path, this._queryParams);
+        return this.navigation$.subscribe(callback);
     }
 
     _listenToNavigation() {
@@ -44,7 +44,7 @@ class RouterNavigatorSingleton {
     _onNavigation(path, queryParams, hash) {
         this._path = path;
         this._queryParams = queryParams;
-        this._listeners.forEach((listener) => listener(this._path, this._queryParams));
+        this.navigation$.next(this._path, this._queryParams);
         this._updateBrowserHistory(path, queryParams, hash);
     }
 
